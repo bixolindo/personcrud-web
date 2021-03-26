@@ -1,14 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  
-  margin: 47px auto 0;
-  display: grid;
-  grid-template-columns: repeat(4,247px);
-  column-gap: 20px;
 
   .our-team {
   padding: 30px 0 40px;
+  height: 350px;
   margin-bottom: 30px;
   background-color: #DFE3DD;
   text-align: center;
@@ -72,10 +68,11 @@ export const Container = styled.div`
 }
 
 .our-team .title {
-  display: block;
+  display: inline-block;
   font-size: 15px;
   color: #4e5052;
   text-transform: capitalize;
+  margin: 0 5px;
 }
 
 .our-team .social {

@@ -12,6 +12,18 @@ export const Container = styled.div`
     background-image: url(https://picsum.photos/g/1800/1080);
     background-size: cover;
     background-position: center;
+
+    >.active{
+        visibility: visible;
+        opacity: 1;
+    }
+
+    >main{
+        margin: 47px auto 0;
+        display: grid;
+        grid-template-columns: repeat(4,247px);
+        column-gap: 20px;
+    }
 `;
 
 export const Header = styled.div`
@@ -68,11 +80,15 @@ export const MenuOverlay = styled.div`
     align-items: center;
     justify-content: center;
 
+    visibility: hidden;
+    opacity: 0;
     z-index: 2;
+
+    transition: 0.5s;
 
     >.menu{
         width:30%;
-        height: 500px;
+        height: 100%;
         border-radius: 10px;
         padding: 0;
 
@@ -119,6 +135,49 @@ export const MenuOverlay = styled.div`
             width: 90%;
             height: 32px;
             margin-left: 5px;
+        }
+    }
+
+    >.form form .actions{
+        display: flex;
+        align-items: center;
+        justify-content:space-evenly;
+        width: 100%;
+        height: 100%;
+
+        >a {
+            display: flex;
+            align-items: center;
+            justify-content:center;
+
+            width: 130px;
+            height: 60px;
+            border: 1px solid darkred;
+            color: darkred;
+            background: #f0f2f5;
+            text-decoration: none;
+
+            border-radius: 14px;
+
+            &:hover{
+                background: darkred;
+                border: 1px solid #f0f2f5;
+                color: #f0f2f5;
+            }
+        }
+        >button {
+            width: 130px;
+            height: 60px;
+            color: #fff;
+            background: #422435;
+            border-radius: 14px;
+            border:none;
+            
+            cursor: pointer;
+
+            &:hover{
+                background: #31081F;
+            }
         }
     }
 }
