@@ -1,8 +1,12 @@
 import React from 'react';
 
+import {Link} from 'react-router-dom';
+
 import { Container } from './styles';
+import api from '../../services/api'
 
 export interface Person {
+    id: number;
     name: string;
     sex: number;
     age: number;
@@ -11,10 +15,17 @@ export interface Person {
 
 interface PersonItemProps{
     person: Person;
+    onDelete: Function;
 }
 
 
-const Card: React.FC<PersonItemProps> = ({person}) => {
+const Card: React.FC<PersonItemProps> = ({person,onDelete}) => {
+    function deletePerson( person : Person){
+        api.delete(`/person/${person.id}`).then(()=>{
+            onDelete(person);
+        });
+    }
+    
   return (
     <Container>
         <div className="row">
@@ -31,16 +42,10 @@ const Card: React.FC<PersonItemProps> = ({person}) => {
                     </div>
                     <ul className="social">
                         <li>
-                            <a href="https://codepen.io/collection/XdWJOQ/" className="fa fa-facebook" aria-hidden="true"></a>
+                            <Link to={`/person/${person.id}`} ><button className="fa fa-pencil" aria-hidden="true"></button></Link>
                         </li>
                         <li>
-                            <a href="https://codepen.io/collection/XdWJOQ/" className="fa fa-twitter" aria-hidden="true"></a>
-                        </li>
-                        <li>
-                            <a href="https://codepen.io/collection/XdWJOQ/" className="fa fa-google-plus" aria-hidden="true"></a>
-                        </li>
-                        <li>
-                            <a href="https://codepen.io/collection/XdWJOQ/" className="fa fa-linkedin" aria-hidden="true"></a>
+                            <button onClick={() => deletePerson(person)} className="fa fa-trash" aria-hidden="true"></button>
                         </li>
                     </ul>
                 </div>

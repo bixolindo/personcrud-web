@@ -6,11 +6,19 @@ const RobotoFont = css`
 
 export default createGlobalStyle `
     ${RobotoFont}
-
+    
     *{
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         font-family: 'Times New Roman', Times, serif;
+    }
+
+    body{
+      /* background-image: url(https://picsum.photos/g/1800/1080);
+      background-size: cover;
+      background-position: center; */
+      background: #c4b5aa;
+      overflow-x: hidden;
     }
 `;

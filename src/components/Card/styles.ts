@@ -92,20 +92,25 @@ export const Container = styled.div`
 
 .our-team .social li {
   display: inline-block;
+  margin: 0 10px;
 }
 
-.our-team .social li a {
+.our-team .social li button {
   display: block;
+  width: 60px;
   padding: 10px;
   font-size: 17px;
-  color: white;
+  color: #31081F;
   transition: all 0.3s ease 0s;
   text-decoration: none;
+  border: 1px solid #31081F;
+  border-radius: 5px;
 }
 
-.our-team .social li a:hover {
-  color: #31081F;
-  background-color: #f7f5ec;
+.our-team .social li button:hover {
+  color: #f7f5ec;
+  background-color: #31081F;
+  border: 1px solid #f7f5ec
 }
 
 .team-content {

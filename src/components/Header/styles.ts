@@ -2,27 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: max-content;
-    
-    font-family: tahoma;
-    background-image: url(https://picsum.photos/g/1800/1080);
-    background-size: cover;
-    background-position: center;
-
-    >main{
-        margin: 47px auto 0;
-        display: grid;
-        grid-template-columns: repeat(4,247px);
-        column-gap: 20px;
-    }
-`;
-
-export const Header = styled.div`
-    display: flex;
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
@@ -30,7 +9,12 @@ export const Header = styled.div`
     background: #422435;
     color: #fff;
 
-    >button {
+    >.addbtn {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+
         width: 54px;
         height: 54px;
         border-radius:50%;
@@ -41,6 +25,8 @@ export const Header = styled.div`
 
         cursor: pointer;
         border: 1px solid #422435;
+
+        text-decoration: none;
 
         transition: 0.9s;
 
@@ -56,7 +42,6 @@ export const Header = styled.div`
             >span{
                 display: inline;
                 opacity: 1;
-
             }
         }
     }

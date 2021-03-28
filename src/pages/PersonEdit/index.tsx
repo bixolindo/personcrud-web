@@ -1,4 +1,4 @@
-import React, { useState, FormEvent} from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import { Radio } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage'
@@ -8,14 +8,12 @@ import api from '../../services/api'
 
 import {Container} from './styles'
 import { Link, useHistory, useParams } from 'react-router-dom';
-
-interface RouteParams {
-    id: string
-}
+import { Person } from '../../components/Card';
 
 
-const PersonForm: React.FC = () => {
-    const params = useParams<RouteParams>();
+
+const PersonEdit: React.FC = () => {
+    const { id } = useParams<Record<string, string | undefined>>()
     const history  = useHistory();
     const [name, setName] = useState("");
     const [sex, setSex] = useState("");
@@ -24,17 +22,35 @@ const PersonForm: React.FC = () => {
     
     const [alertMessageProps, setAlertMessageProps] = useState<AlertMessageProps | undefined>(undefined);
 
+    const [pessoacerta,setPessoaCerta] = useState<Person | any>({name : "", age: "", sex:"", address: ""})
+
+    const carregarPessoa = useEffect(() => {
+        async function loadPersons() {
+            console.log(id)
+          const response = await api.get(`/person/${id}`)
+    
+          setPessoaCerta(response.data);
+          setName(pessoacerta.name);
+          setSex(pessoacerta.sex);
+          setAge(pessoacerta.age);
+          setAddress(pessoacerta?.address);
+        }
+        loadPersons();
+      },[])
+    
+    
+    
 
     function addPerson(e: FormEvent) {
         e.preventDefault();
-        api.post("person", {
+        api.put(`/person/${id}`, {
             name,
             sex: Number(sex),
             age: Number(age),
             address
         }).then(() => {
             const message: AlertMessageProps = {
-                message: 'Pessoa cadastrada com sucesso',
+                message: 'Pessoa editada com sucesso',
                 open: true,
                 type: 'success'
             }
@@ -42,7 +58,7 @@ const PersonForm: React.FC = () => {
             history.push('/');
         }).catch(() => {
             const message: AlertMessageProps = {
-                message: 'Erro ao adicionar pessoa',
+                message: 'Erro ao editar pessoa',
                 open: true,
                 type: 'error'
             }
@@ -64,19 +80,20 @@ const PersonForm: React.FC = () => {
         setSex(event.target.value)
       };
 
+
     return (
         <Container>
-            {console.log(params.id)}
-            <Header title="Cadastro de pessoa" adress="/" btnmessage="retornar a listagem" />
+            {carregarPessoa}
+            <Header title="Editar Pessoa" adress="/" btnmessage="retornar a listagem" />
             <div className="menu">
                 <div className="form">
                     <form onSubmit={addPerson}>
                         <div className="img"></div>
                         <div className="name-camp">
-                            <TextField className="text-input" id="name" label="Nome" onChange={(e) => { setName(e.target.value) }} />
+                            <TextField className="text-input" id="name" value={name} label="name" onChange={(e) => { setName(e.target.value) }} />
                         </div>
                         <div className="age-camp">
-                            <TextField className="text-input" type="number" name="Age" id="Age" placeholder="Idade" onChange={(e) => { setAge(e.target.value) }} />
+                            <TextField className="text-input" type="number" name="Age" id="Age" value={age} onChange={(e) => { setAge(e.target.value) }} />
                         </div>
                         <div className="radio-camp">
                             <Radio
@@ -97,7 +114,7 @@ const PersonForm: React.FC = () => {
                             <label htmlFor="female"><i className="fa fa-venus" aria-hidden="true"></i></label>
                         </div>
                         <div className="address-camp">
-                            <TextField className="text-input" id="Address" label="Address" onChange={(e) => { setAddress(e.target.value) }} />
+                            <TextField className="text-input" id="Address" value={address} label="adress" onChange={(e) => { setAddress(e.target.value) }} />
                         </div>
                         <div className="input-group actions">
                             <Link to="/" className="btncancel">Cancelar</Link>
@@ -111,4 +128,4 @@ const PersonForm: React.FC = () => {
     );
 }
 
-export default PersonForm;
+export default PersonEdit;
