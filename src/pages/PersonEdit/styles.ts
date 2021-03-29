@@ -1,15 +1,22 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: max-content;
 
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 
-    transition: 0.5s;
+    position: absolute;
+
+    >h1{
+        width: 80%;
+        padding: 20px;
+        margin-top: 20px;
+        border-bottom: 1px solid #31081F;
+    }
 
     >.menu{
         width:70%;

@@ -1,9 +1,10 @@
 import React, { useState, FormEvent} from 'react';
-import { Radio } from '@material-ui/core';
+import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage'
 import Header from '../../components/Header'
-
+import { motion } from 'framer-motion'
+ 
 import api from '../../services/api'
 
 import {Container} from './styles'
@@ -64,50 +65,72 @@ const PersonForm: React.FC = () => {
         setSex(event.target.value)
       };
 
+    const containerVariants = {
+        hidden: {
+            opacity: 0,
+            transform: "translate(50%, 0)",
+        },
+        visible:{
+            opacity: 1,
+            transform: "translate(0%, 0)",
+            transition:{ delay: 0.2, duration: 0.2}
+        },
+        exit:{
+            opacity: 0,
+            transform: "translate(-50%, 0)"
+        }
+    }
+
     return (
-        <Container>
-            {console.log(params.id)}
-            <Header title="Cadastro de pessoa" adress="/" btnmessage="retornar a listagem" />
-            <div className="menu">
-                <div className="form">
-                    <form onSubmit={addPerson}>
-                        <div className="img"></div>
-                        <div className="name-camp">
-                            <TextField className="text-input" id="name" label="Nome" onChange={(e) => { setName(e.target.value) }} />
-                        </div>
-                        <div className="age-camp">
-                            <TextField className="text-input" type="number" name="Age" id="Age" placeholder="Idade" onChange={(e) => { setAge(e.target.value) }} />
-                        </div>
-                        <div className="radio-camp">
-                            <Radio
-                                checked={selectedValue === '0'}
-                                onChange={handleChange}
-                                value="0"
-                                name="Male"
-                                inputProps={{ 'aria-label': '0' }}
-                            />
-                            <label htmlFor="male"><i className="fa fa-mars" aria-hidden="true"></i></label>
-                            <Radio
-                                checked={selectedValue === '1'}
-                                onChange={handleChange}
-                                value="1"
-                                name="Female"
-                                inputProps={{ 'aria-label': '1' }}
-                            />
-                            <label htmlFor="female"><i className="fa fa-venus" aria-hidden="true"></i></label>
-                        </div>
-                        <div className="address-camp">
-                            <TextField className="text-input" id="Address" label="Address" onChange={(e) => { setAddress(e.target.value) }} />
-                        </div>
-                        <div className="input-group actions">
-                            <Link to="/" className="btncancel">Cancelar</Link>
-                            <button className="btnsave" type="submit"> Salvar</button>
-                        </div>
-                    </form>
+        <motion.div variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+        >
+            <Container>
+                {console.log(params.id)}
+                <h1>Adicionar Pessoa</h1>
+                <div className="menu">
+                    <div className="form">
+                        <form onSubmit={addPerson}>
+                            <div className="img"></div>
+                            <div className="name-camp">
+                                <TextField className="text-input" id="name" label="Nome" onChange={(e) => { setName(e.target.value) }} />
+                            </div>
+                            <div className="age-camp">
+                                <TextField className="text-input" type="number" name="Age" id="Age" placeholder="Idade" onChange={(e) => { setAge(e.target.value) }} />
+                            </div>
+                            <div className="radio-camp">
+                                <Radio
+                                    checked={selectedValue === '0'}
+                                    onChange={handleChange}
+                                    value="0"
+                                    name="Male"
+                                    inputProps={{ 'aria-label': '0' }}
+                                />
+                                <label htmlFor="male"><i className="fa fa-mars" aria-hidden="true"></i></label>
+                                <Radio
+                                    checked={selectedValue === '1'}
+                                    onChange={handleChange}
+                                    value="1"
+                                    name="Female"
+                                    inputProps={{ 'aria-label': '1' }}
+                                />
+                                <label htmlFor="female"><i className="fa fa-venus" aria-hidden="true"></i></label>
+                            </div>
+                            <div className="address-camp">
+                                <TextField className="text-input" id="Address" label="Address" onChange={(e) => { setAddress(e.target.value) }} />
+                            </div>
+                            <div className="input-group actions">
+                                <Link to="/" className="btncancel">Cancelar</Link>
+                                <button className="btnsave" type="submit"> Salvar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            {alertMessageProps === undefined ? <div></div> : <AlertMessage open={alertMessageProps.open} type={alertMessageProps.type} message={alertMessageProps.message} />}
-        </Container>
+                {alertMessageProps === undefined ? <div></div> : <AlertMessage open={alertMessageProps.open} type={alertMessageProps.type} message={alertMessageProps.message} />}
+            </Container>
+        </motion.div>
     );
 }
 

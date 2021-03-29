@@ -7,6 +7,7 @@ import Card, { Person } from '../../components/Card'
 import Header from '../../components/Header'
 
 import api from '../../services/api'
+import { Link } from 'react-router-dom';
 
 
 
@@ -36,7 +37,10 @@ const PersonList: React.FC = () => {
     <>
       <Container>
         {carregarPessoas}
-        <Header title="Lista de Pessoas Cadastradas" adress="/person" btnmessage="adicionar pessoa" />
+        <div className="header">
+          <h1>Lista de pessoas</h1>
+          <Link to="/person" className="addbtn"><i className="fa fa-user-plus"></i><span>Adicionar Pessoas</span></Link>
+        </div>
         <main>
           {persons.map((person: Person) => {
             return <Card onDelete={verifydelete} key={person.id} person={person} />
