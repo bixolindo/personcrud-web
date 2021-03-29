@@ -73,7 +73,6 @@ const PersonForm: React.FC = () => {
         visible:{
             opacity: 1,
             transform: "translate(0%, 0)",
-            transition:{ delay: 0.2, duration: 0.2}
         },
         exit:{
             opacity: 0,
@@ -88,7 +87,6 @@ const PersonForm: React.FC = () => {
             exit="exit"
         >
             <Container>
-                {console.log(params.id)}
                 <h1>Adicionar Pessoa</h1>
                 <div className="menu">
                     <div className="form">
@@ -119,7 +117,7 @@ const PersonForm: React.FC = () => {
                                 <label htmlFor="female"><i className="fa fa-venus" aria-hidden="true"></i></label>
                             </div>
                             <div className="address-camp">
-                                <TextField className="text-input" id="Address" label="Address" onChange={(e) => { setAddress(e.target.value) }} />
+                                <TextField className="text-input" id="Address" label="Endereço" onChange={(e) => { setAddress(e.target.value) }} />
                             </div>
                             <div className="input-group actions">
                                 <Link to="/" className="btncancel">Cancelar</Link>

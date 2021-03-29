@@ -60,6 +60,7 @@ export const Container = styled.div`
   border-radius: 50%;
   transform: scale(1);
   transition: all 0.9s ease 0s;
+  border: 1px solid #31081F;
 }
 
 .our-team:hover .picture img {

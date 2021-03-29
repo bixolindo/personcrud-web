@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 
 import { Container } from './styles';
 import api from '../../services/api'
+import defaultimg from '../../img/default_mk1.png'
 
 export interface Person {
     id: number;
@@ -32,7 +33,7 @@ const Card: React.FC<PersonItemProps> = ({person,onDelete}) => {
             <div className="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div className="our-team">
                     <div className="picture">
-                        <img src="https://picsum.photos/130/130?image=1027" alt="" className="img-fluid"/>
+                        <img src={defaultimg} alt="" className="img-fluid"/>
                     </div>
                     <div className="team-content">
                         <h3 className="name">{person.name}</h3>

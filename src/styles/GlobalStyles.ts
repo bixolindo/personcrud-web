@@ -15,9 +15,6 @@ export default createGlobalStyle `
     }
 
     body{
-      /* background-image: url(https://picsum.photos/g/1800/1080);
-      background-size: cover;
-      background-position: center; */
       background: #c4b5aa;
       overflow-x: hidden;
     }

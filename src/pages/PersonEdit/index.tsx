@@ -2,7 +2,6 @@ import React, { useState, FormEvent, useEffect } from 'react';
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage'
-import Header from '../../components/Header'
 
 import api from '../../services/api'
 
@@ -111,10 +110,10 @@ const PersonEdit: React.FC = () => {
                         <form onSubmit={addPerson}>
                             <div className="img"></div>
                             <div className="name-camp">
-                                <TextField className="text-input" id="name" value={name} label="name" onChange={(e) => { setName(e.target.value) }} />
+                                <TextField className="text-input" id="name" value={name} label="Nome" onChange={(e) => { setName(e.target.value) }} />
                             </div>
                             <div className="age-camp">
-                                <TextField className="text-input" type="number" name="Age" id="Age" value={age} onChange={(e) => { setAge(e.target.value) }} />
+                                <TextField className="text-input" type="number" name="Age" id="Idade" value={age} onChange={(e) => { setAge(e.target.value) }} />
                             </div>
                             <div className="radio-camp">
                                 <Radio
@@ -135,7 +134,7 @@ const PersonEdit: React.FC = () => {
                                 <label htmlFor="female"><i className="fa fa-venus" aria-hidden="true"></i></label>
                             </div>
                             <div className="address-camp">
-                                <TextField className="text-input" id="Address" value={address} label="adress" onChange={(e) => { setAddress(e.target.value) }} />
+                                <TextField className="text-input" id="Address" value={address} label="Endereço" onChange={(e) => { setAddress(e.target.value) }} />
                             </div>
                             <div className="input-group actions">
                                 <Link to="/" className="btncancel">Cancelar</Link>
