@@ -1,3 +1,7 @@
+This project is a web page to manipulate a CRUD back-end develped in my [other repository](https://github.com/bixolindo/quarkus-crud);
+
+also has a animeted page switcher between routes of the aplication 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
