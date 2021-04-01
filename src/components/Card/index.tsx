@@ -15,12 +15,6 @@ export interface Person {
     base64: string;
 }
 
-export interface Photo {
-    id?: number,
-    base64: string | undefined,
-    userId: number,
-}
-
 interface PersonItemProps {
     person: Person;
     onDelete: Function;

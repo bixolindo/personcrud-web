@@ -5,41 +5,41 @@ import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage'
 
 import api from '../../services/api'
 
-import {Container} from './styles'
+import { Container } from './styles'
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { Person } from '../../components/Card';
 import { motion } from 'framer-motion'
+import { useRef } from 'react';
+import placeholder from '../../img/pl-profile.jpeg'
 
 
 
 const PersonEdit: React.FC = () => {
     const { id } = useParams<Record<string, string | undefined>>()
-    const history  = useHistory();
-    const [name, setName] = useState("");
-    const [sex, setSex] = useState("");
-    const [age, setAge] = useState("");
-    const [address, setAddress] = useState("");
-    
+    const history = useHistory();
+    const [name, setName] = useState(" ");
+    const [sex, setSex] = useState(" ");
+    const [age, setAge] = useState(" ");
+    const [address, setAddress] = useState(" ");
+    const [profilePhoto, setProfilePhoto] = useState<string | undefined>();
     const [alertMessageProps, setAlertMessageProps] = useState<AlertMessageProps | undefined>(undefined);
-
-    const [pessoacerta,setPessoaCerta] = useState<Person | any>({name : "", age: "", sex:"", address: ""})
+    const imageInputRef = useRef<HTMLInputElement>(null);
 
     const carregarPessoa = useEffect(() => {
         async function loadPersons() {
-            console.log(id)
-          const response = await api.get(`/person/${id}`)
-    
-          setPessoaCerta(response.data);
-          setName(pessoacerta.name);
-          setSex(pessoacerta.sex);
-          setAge(pessoacerta.age);
-          setAddress(pessoacerta?.address);
+            const response = await api.get(`/person/${id}`)
+            const pessoacerta : Person = response.data;
+            setName(pessoacerta.name);
+            setSex(String(pessoacerta.sex));
+            setAge(String(pessoacerta.age));
+            setAddress(pessoacerta.address);
+            setProfilePhoto(response.data.base64);
         }
         loadPersons();
-      },[])
-    
-    
-    
+    }, [])
+
+
+
 
     function addPerson(e: FormEvent) {
         e.preventDefault();
@@ -47,7 +47,8 @@ const PersonEdit: React.FC = () => {
             name,
             sex: Number(sex),
             age: Number(age),
-            address
+            address,
+            base64: profilePhoto
         }).then(() => {
             const message: AlertMessageProps = {
                 message: 'Pessoa editada com sucesso',
@@ -74,41 +75,63 @@ const PersonEdit: React.FC = () => {
         }, 1500)
     }
 
-    const [selectedValue, setSelectedValue] = React.useState('');    
-      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValue(event.target.value);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSex(event.target.value)
-      };
+    };
 
-      const containerVariants = {
+    const onClickSelectImage = () => {
+        if (imageInputRef != null && imageInputRef.current != null) {
+            imageInputRef.current.click();
+        }
+
+    }
+
+    const onImageSelected = async (event: any) => {
+        let file: File = event.target.files[0];
+        let base64: string | undefined = await toBase64(file);
+        setProfilePhoto(base64);
+    }
+
+    const toBase64 = (file: File) => new Promise<string | undefined>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result?.toString());
+        reader.onerror = error => reject(error);
+    });
+
+
+    const containerVariants = {
         hidden: {
             opacity: 0,
             transform: "translate(100%, 0)",
         },
-        visible:{
+        visible: {
             opacity: 1,
             transform: "translate(0%, 0)",
         },
-        exit:{
+        exit: {
             opacity: 0,
             transform: "translate(-50%, 0)"
         }
     }
 
     return (
-        <motion.div 
+        <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
         >
+            {carregarPessoa}
             <Container>
-                {carregarPessoa}
                 <h1>Editar Pessoa</h1>
                 <div className="menu">
                     <div className="form">
                         <form onSubmit={addPerson}>
-                            <div className="img"></div>
+                            <div className="img-container">
+                                <img onClick={onClickSelectImage} className="img" src={profilePhoto || placeholder} alt="profile-img" />
+                                <input onChange={(e) => onImageSelected(e)} ref={imageInputRef} className="hide-input" type="file" id="img" name="img" accept="image/*" />
+                            </div>
                             <div className="name-camp">
                                 <TextField className="text-input" id="name" value={name} label="Nome" onChange={(e) => { setName(e.target.value) }} />
                             </div>
@@ -117,7 +140,7 @@ const PersonEdit: React.FC = () => {
                             </div>
                             <div className="radio-camp">
                                 <Radio
-                                    checked={selectedValue === '0'}
+                                    checked={sex == '0'}
                                     onChange={handleChange}
                                     value="0"
                                     name="Male"
@@ -125,7 +148,7 @@ const PersonEdit: React.FC = () => {
                                 />
                                 <label htmlFor="male"><i className="fa fa-mars" aria-hidden="true"></i></label>
                                 <Radio
-                                    checked={selectedValue === '1'}
+                                    checked={sex == '1'}
                                     onChange={handleChange}
                                     value="1"
                                     name="Female"

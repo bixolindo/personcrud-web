@@ -2,25 +2,13 @@ import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion';
 import React, { FormEvent, useRef, useState } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage';
-import { Person, Photo } from '../../components/Card';
 import placeholder from "../../img/pl-profile.jpeg";
 import api from '../../services/api';
 import { Container } from './styles';
 
-
-
-
-interface RouteParams {
-    id: string
-}
-
-
-
-
 const PersonForm: React.FC = () => {
-    const params = useParams<RouteParams>();
     const history = useHistory();
     const [name, setName] = useState("");
     const [sex, setSex] = useState("");

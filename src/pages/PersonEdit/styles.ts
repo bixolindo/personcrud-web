@@ -39,12 +39,31 @@ export const Container = styled.div`
                 flex-direction: column;
             }
         }
+        .img-container {
+            width: 150px;
+            height: 150px;
+            background: grey;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        >.form form .img{
-                width: 150px;
-                height: 150px;
-                background: grey;
-                border-radius: 50%;
+        .hide-input {
+            display: none;
+        }
+
+        >.form form .img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: filter 0.5s ease;
+            object-fit: cover;
+        }
+
+        .img:hover {
+            filter: brightness(0.9);
         }
         >.form form .name-camp{
             width: 60%;
