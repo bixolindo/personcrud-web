@@ -1,28 +1,34 @@
-import React, { useState, FormEvent} from 'react';
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
-import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage'
-import Header from '../../components/Header'
-import { motion } from 'framer-motion'
- 
-import api from '../../services/api'
-
-import {Container} from './styles'
+import { motion } from 'framer-motion';
+import React, { FormEvent, useRef, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
+import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage';
+import { Person, Photo } from '../../components/Card';
+import placeholder from "../../img/pl-profile.jpeg";
+import api from '../../services/api';
+import { Container } from './styles';
+
+
+
 
 interface RouteParams {
     id: string
 }
 
 
+
+
 const PersonForm: React.FC = () => {
     const params = useParams<RouteParams>();
-    const history  = useHistory();
+    const history = useHistory();
     const [name, setName] = useState("");
     const [sex, setSex] = useState("");
     const [age, setAge] = useState("");
     const [address, setAddress] = useState("");
-    
+    const [profilePhoto, setProfilePhoto] = useState<string | undefined>();
+    const imageInputRef = useRef<HTMLInputElement>(null);
+
     const [alertMessageProps, setAlertMessageProps] = useState<AlertMessageProps | undefined>(undefined);
 
 
@@ -32,13 +38,16 @@ const PersonForm: React.FC = () => {
             name,
             sex: Number(sex),
             age: Number(age),
-            address
-        }).then(() => {
+            address,
+            base64: profilePhoto
+        }).then(async (person: any) => {
             const message: AlertMessageProps = {
                 message: 'Pessoa cadastrada com sucesso',
                 open: true,
                 type: 'success'
             }
+
+
             showAlertMessage(message)
             history.push('/');
         }).catch(() => {
@@ -51,6 +60,7 @@ const PersonForm: React.FC = () => {
         })
     }
 
+
     function showAlertMessage(alertMessage: AlertMessageProps) {
         setAlertMessageProps(alertMessage)
         setTimeout(() => {
@@ -59,26 +69,46 @@ const PersonForm: React.FC = () => {
         }, 1500)
     }
 
-    const [selectedValue, setSelectedValue] = React.useState('');    
-      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const [selectedValue, setSelectedValue] = React.useState('');
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedValue(event.target.value);
         setSex(event.target.value)
-      };
+    };
 
     const containerVariants = {
         hidden: {
             opacity: 0,
             transform: "translate(50%, 0)",
         },
-        visible:{
+        visible: {
             opacity: 1,
             transform: "translate(0%, 0)",
         },
-        exit:{
+        exit: {
             opacity: 0,
             transform: "translate(-50%, 0)"
         }
     }
+
+    const onClickSelectImage = () => {
+        if (imageInputRef != null && imageInputRef.current != null) {
+            imageInputRef.current.click();
+        }
+
+    }
+
+    const onImageSelected = async (event: any) => {
+        let file: File = event.target.files[0];
+        let base64: string | undefined = await toBase64(file);
+        setProfilePhoto(base64);
+    }
+
+    const toBase64 = (file: File) => new Promise<string | undefined>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result?.toString());
+        reader.onerror = error => reject(error);
+    });
 
     return (
         <motion.div variants={containerVariants}
@@ -91,7 +121,11 @@ const PersonForm: React.FC = () => {
                 <div className="menu">
                     <div className="form">
                         <form onSubmit={addPerson}>
-                            <div className="img"></div>
+                            <div className="img-container">
+                                <img onClick={onClickSelectImage} className="img" src={profilePhoto || placeholder} alt="profile-img" />
+                                <input onChange={(e) => onImageSelected(e)} ref={imageInputRef} className="hide-input" type="file" id="img" name="img" accept="image/*" />
+                            </div>
+
                             <div className="name-camp">
                                 <TextField className="text-input" id="name" label="Nome" onChange={(e) => { setName(e.target.value) }} />
                             </div>

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Card, { Person } from '../../components/Card';
+import api from '../../services/api';
 import { Container } from './styles';
 
-import Card, { Person } from '../../components/Card'
 
-import Header from '../../components/Header'
 
-import api from '../../services/api'
-import { Link } from 'react-router-dom';
+
 
 
 
@@ -23,9 +22,9 @@ const PersonList: React.FC = () => {
       setPersons(response.data);
     }
     loadPersons();
-  },[]);
+  }, []);
 
-  function verifydelete(person : Person){
+  function verifydelete(person: Person) {
     let personlist = [...persons]
     let index = personlist.indexOf(person);
     personlist.splice(index, 1);
