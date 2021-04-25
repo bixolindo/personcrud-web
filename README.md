@@ -1,6 +1,16 @@
-This project is a web page to manipulate a CRUD back-end develped in my [other repository](https://github.com/bixolindo/quarkus-crud);
+# Sobre o projeto
 
-also has a animeted page switcher between routes of the aplication 
+esse projeto foi criado para manipular um backend de CRUD criado em meu [outro repositorio](https://github.com/bixolindo/quarkus-crud);
+
+foi desenvolvido por mim e @paulomoschen com dicas do @T4SUYA
+
+ele foi desenvolvido usando typescrit e styled-components 
+
+# Animação entre Abas
+
+foi feito uma animação quando muda de uma pagina para outra usando [framer-motion](https://www.framer.com/api/motion/)
+
+que é uma biblioteca bem facil de usar e muito boa para fazer animações 
 
 # Getting Started with Create React App
 
