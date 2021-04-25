@@ -12,6 +12,9 @@ foi feito uma animação quando muda de uma pagina para outra usando [framer-mot
 
 que é uma biblioteca bem facil de usar e muito boa para fazer animações 
 
+![slide-page](https://user-images.githubusercontent.com/63428635/116006056-13e58b80-a5e0-11eb-9c67-e5507a774bba.gif)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
