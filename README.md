@@ -10,7 +10,7 @@ ele foi desenvolvido usando typescrit e styled-components
 
 foi feito uma animação quando muda de uma pagina para outra usando [framer-motion](https://www.framer.com/api/motion/)
 
-que é uma biblioteca bem facil de usar e muito boa para fazer animações 
+que é uma biblioteca bem facil de usar e muito boa para fazer animações usando <motion.div></motion.div>
 
 ![slide-page](https://user-images.githubusercontent.com/63428635/116006056-13e58b80-a5e0-11eb-9c67-e5507a774bba.gif)
 
