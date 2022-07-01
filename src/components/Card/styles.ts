@@ -13,6 +13,14 @@ export const Container = styled.div`
     border: 1px solid #31081f;
   }
 
+  #img-expanded{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #000;
+  }
+
   .our-team .picture {
     display: inline-block;
     height: 130px;

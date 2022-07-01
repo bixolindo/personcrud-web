@@ -30,9 +30,9 @@ const PersonEdit: React.FC = () => {
             const response = await api.get(`/person/${id}`)
             const pessoacerta : Person = response.data;
             setName(pessoacerta.name);
-            setSex(String(pessoacerta.sex));
-            setAge(String(pessoacerta.age));
-            setAddress(pessoacerta.address);
+            // setSex(String(pessoacerta.sex));
+            // setAge(String(pessoacerta.age));
+            // setAddress(pessoacerta.address);
             setProfilePhoto(response.data.base64);
         }
         loadPersons();
