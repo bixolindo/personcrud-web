@@ -1,7 +1,7 @@
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion';
-import React, { FormEvent, useRef, useState } from 'react';
+import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Autenticacao  from '../../autenticacao/autenticacao';
 import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage';
@@ -25,7 +25,6 @@ const Login: React.FC = () => {
             password,
         }).then(async (person: any) => {
             localStorage.setItem('idUsuario', person.data.id);
-            console.log(person);
             
             history.push('/home');
         }).catch(() => {
@@ -37,6 +36,10 @@ const Login: React.FC = () => {
             showAlertMessage(message)
         })
     }
+
+    const limpaUsuario = useEffect(() => {
+        localStorage.removeItem('idUsuario');
+      }, []);
 
 
     function showAlertMessage(alertMessage: AlertMessageProps) {
@@ -72,7 +75,8 @@ const Login: React.FC = () => {
             exit="exit"
         >
             <Container>
-                <h1>Adicionar Pessoa</h1>
+            {limpaUsuario}
+                <h1>Gestão de Vagas Creche</h1>
                 <div className="menu">
 
                     <form className="form" onSubmit={addPerson}>

@@ -21,12 +21,6 @@ export const Container = styled.div`
     border: 2px solid #000;
   }
 
-  .listCreche-container {
-    width: 50%;
-    height: 50%;
-    background-color: red;
-  }
-
   .our-team .picture {
     display: inline-block;
     height: 130px;
@@ -131,9 +125,4 @@ export const Container = styled.div`
   .team-content {
     padding: 13px;
   }
-  
-  .text-input {
-        width: 90%;
-        margin: 0 20px;
-      }
 `;

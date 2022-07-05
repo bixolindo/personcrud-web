@@ -2,7 +2,7 @@ import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion';
 import React, { FormEvent, useRef, useState } from 'react';
-import { Link, useHistory} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage';
 import placeholder from "../../img/pl-profile.jpeg";
 import api from '../../services/api';
@@ -31,7 +31,7 @@ const Creche: React.FC = () => {
             }
 
             showAlertMessage(message)
-            
+
         }).catch(() => {
             const message: AlertMessageProps = {
                 message: 'Erro ao adicionar Creche',
@@ -66,6 +66,11 @@ const Creche: React.FC = () => {
         }
     }
 
+    function voltar() {
+        
+        history.goBack();
+    }
+
     return (
         <motion.div variants={containerVariants}
             initial="hidden"
@@ -77,20 +82,20 @@ const Creche: React.FC = () => {
                 <div className="menu">
                     <div className="form">
                         <form onSubmit={addCreche}>
-                    
 
-                            <div className="name-camp">
+                            <div className="col-12 name-camp">
                                 <TextField className="text-input" id="name" label="Nome" onChange={(e) => { setName(e.target.value) }} />
                             </div>
-                            <div className="age-camp">
+                            <div className="col-12  age-camp">
                                 <TextField className="text-input" type="number" name="Limite" id="Limite" placeholder="Limite" onChange={(e) => { setLimite(e.target.value) }} />
                             </div>
-                         
-                            <div className="address-camp">
+
+                            <div className="col-12 address-camp">
                                 <TextField className="text-input" id="Bairro" label="Bairro" onChange={(e) => { setBairro(e.target.value) }} />
                             </div>
-                            <div className="input-group actions">
-                                <Link to="/home" className="btncancel">Cancelar</Link>
+                            <div className="col-12 input-group actions">
+                            
+                                <button onClick={() => voltar()} className="btncancel"> Cancelar</button>
                                 <button className="btnsave" type="submit"> Salvar</button>
                             </div>
                         </form>

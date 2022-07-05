@@ -1,12 +1,15 @@
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
 import Modal from '@material-ui/core/Modal';
 import React, { useState } from 'react';
+import { propTypes } from 'react-bootstrap/esm/Image';
 import defaultimg from '../../img/default_mk1.png';
+import Creche1 from '../../pages/Creche';
+import { Creche } from '../../pages/CrecheList';
 import { Crianca } from '../../pages/PersonForm/crianca';
 import api from '../../services/api';
 import { AlertMessageProps } from '../AlertMessage';
 import { Container } from './styles';
-
-
 
 export interface Person {
     id: number;
@@ -20,6 +23,7 @@ export interface Person {
 interface PersonItemProps {
     crianca: Crianca;
     onDelete: Function;
+    listCreche: Creche[];
 }
 
 const style = {
@@ -30,8 +34,22 @@ const style = {
 
 };
 
-const Card: React.FC<PersonItemProps> = ({ crianca }) => {
+const estiloModal = {
+    width: `50%`,
+    height: `50%`,
+    position: 'absolute' as 'absolute',
+    top: `50%`,
+    left: `50%`,
+    transform: `translate(-50%, -50%)`,
+    backgroundColor: `#ddd`,
+    display: `flex`,
+    alignItems: `center`,
+    justifyContent: `center`,
+}
+
+const Card: React.FC<PersonItemProps> = ({ crianca, onDelete, listCreche }) => {
     const [alertMessageProps, setAlertMessageProps] = useState<AlertMessageProps | undefined>(undefined);
+    const [idCreche, setIdCreche] = React.useState(0);
 
     function invalidaEndereco(crianca: Crianca) {
         crianca.valido = false;
@@ -41,7 +59,6 @@ const Card: React.FC<PersonItemProps> = ({ crianca }) => {
                 open: true,
                 type: 'success'
             }
-
             showAlertMessage(message)
         }).catch(() => {
             const message: AlertMessageProps = {
@@ -52,11 +69,26 @@ const Card: React.FC<PersonItemProps> = ({ crianca }) => {
             showAlertMessage(message)
         });
     }
+
     function confirmaEndereco(crianca: Crianca) {
         crianca.valido = true;
         api.put(`crianca/${crianca.id}`, crianca).then(async (person: any) => {
-
+            onDelete(crianca);
         });
+    }
+
+    function salvarCriancaCreche() {
+        crianca.id_creche = idCreche;
+        api.put(`crianca/${crianca.id}`, crianca).then(async (person: any) => { });
+        const creche = listCreche.find(c => c.id == idCreche);
+        if (creche != null) {
+            console.log(creche);
+            
+            creche.limite = creche.limite - 1;
+            api.put(`creche/${creche.id}`, creche).then((_) =>
+            setopenVincular(false)
+            )
+        }
     }
 
     function showAlertMessage(alertMessage: AlertMessageProps) {
@@ -70,6 +102,11 @@ const Card: React.FC<PersonItemProps> = ({ crianca }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [openVincular, setopenVincular] = React.useState(false);
+    const handleopenVincular = () => setopenVincular(true);
+
+    const handleCloseVincular = () => setopenVincular(false);
 
     return (
         <>
@@ -93,6 +130,9 @@ const Card: React.FC<PersonItemProps> = ({ crianca }) => {
                                 <li>
                                     <button onClick={() => invalidaEndereco(crianca)} className="fa fa-trash" aria-hidden="true"></button>
                                 </li>
+                                <li>
+                                    <button onClick={handleopenVincular} className="fa fa-home" aria-hidden="true"></button>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -104,6 +144,30 @@ const Card: React.FC<PersonItemProps> = ({ crianca }) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             ><img src={crianca.comprovante || defaultimg} style={style} /></Modal>
+
+            <Modal
+                open={openVincular}
+                onClose={handleCloseVincular}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div className='listCreche-container' style={estiloModal}>
+                    <FormControl>
+                        <InputLabel id="demo-simple-select-label">Creche</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={idCreche}
+                            label="Creche"
+                            onChange={(event) => setIdCreche(event.target.value as number)}
+                        >
+                            {listCreche.map((creche: Creche) => {
+                                return <MenuItem value={creche.id}>{creche.name}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
+                    <button onClick={() => salvarCriancaCreche()} className="fa fa-home" aria-hidden="true"></button>
+                </div></Modal>
         </>
     );
 }

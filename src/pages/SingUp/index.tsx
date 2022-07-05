@@ -1,10 +1,9 @@
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import { motion } from 'framer-motion';
-import React, { FormEvent, useRef, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import AlertMessage, { AlertMessageProps } from '../../components/AlertMessage';
-import placeholder from "../../img/pl-profile.jpeg";
 import api from '../../services/api';
 import { Container } from './style';
 
@@ -29,9 +28,9 @@ const SingUp: React.FC = () => {
                 open: true,
                 type: 'success'
             }
-
+            localStorage.setItem('idUsuario', person.data.id);
             showAlertMessage(message)
-            history.push('/');
+            history.push('/home');
         }).catch(() => {
             const message: AlertMessageProps = {
                 message: 'Erro ao adicionar pessoa',

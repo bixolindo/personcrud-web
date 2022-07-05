@@ -75,8 +75,8 @@ export const Container = styled.div`
         height: 60px;
         margin: 0 20px;
 
-        border: 1px solid darkred;
-        color: darkred;
+        border: 1px solid darkgreen;
+        color: darkgreen;
         background: #f0f2f5;
 
         text-decoration: none;
@@ -84,7 +84,7 @@ export const Container = styled.div`
         border-radius: 14px;
 
         &:hover {
-          background: darkred;
+          background: darkgreen;
           border: 1px solid #f0f2f5;
           color: #f0f2f5;
         }
