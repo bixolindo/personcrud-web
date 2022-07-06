@@ -21,10 +21,25 @@ export const Container = styled.div`
     border: 2px solid #000;
   }
 
+  .MuiFormControl-root {
+    border: 0;
+    margin: 10px;
+    display: inline-flex;
+    padding: 0;
+    position: relative;
+    flex-direction: column;
+    vertical-align: top;
+}
+
   .listCreche-container {
     width: 50%;
     height: 50%;
     background-color: red;
+  }
+
+  .botao2 {
+    width: 15%;
+    margin: 10px;
   }
 
   .our-team .picture {
@@ -136,4 +151,6 @@ export const Container = styled.div`
         width: 90%;
         margin: 0 20px;
       }
+
+  
 `;

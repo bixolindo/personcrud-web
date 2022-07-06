@@ -1,10 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
 import Modal from '@material-ui/core/Modal';
 import React, { useState } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import defaultimg from '../../img/default_mk1.png';
-import Creche1 from '../../pages/Creche';
 import { Creche } from '../../pages/CrecheList';
 import { Crianca } from '../../pages/PersonForm/crianca';
 import api from '../../services/api';
@@ -83,10 +80,10 @@ const Card: React.FC<PersonItemProps> = ({ crianca, onDelete, listCreche }) => {
         const creche = listCreche.find(c => c.id == idCreche);
         if (creche != null) {
             console.log(creche);
-            
+
             creche.limite = creche.limite - 1;
             api.put(`creche/${creche.id}`, creche).then((_) =>
-            setopenVincular(false)
+                setopenVincular(false)
             )
         }
     }
@@ -166,7 +163,7 @@ const Card: React.FC<PersonItemProps> = ({ crianca, onDelete, listCreche }) => {
                             })}
                         </Select>
                     </FormControl>
-                    <button onClick={() => salvarCriancaCreche()} className="fa fa-home" aria-hidden="true"></button>
+                    <button onClick={() => salvarCriancaCreche()} className="botao2" aria-hidden="true">Atribuir Creche</button>
                 </div></Modal>
         </>
     );
